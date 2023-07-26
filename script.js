@@ -35,9 +35,9 @@ function myLoop() {         //  create a loop function
 async function featchData() {
 
 
-    var json = json001;
+    var json = json002;
 
-    for (var i = 0, ln = json.length; i < ln; i++) {
+    for (var i = 0, ln = 10; i < ln; i++) {
         var index = i;
         var ayat = json[i];
 
@@ -58,7 +58,7 @@ async function featchData() {
                 "english": en[i],
                 "en_t": v.split("./")[1],
                 "arabic": ar_u,
-                "ar_mp3": "https://words.audios.quranwbw.com/" + surah + "/" + padZero(surah) + "_" + padZero(index + 1) + "_" + padZero(i + 1) + ".mp3",
+                //"ar_mp3": "https://words.audios.quranwbw.com/" + surah + "/" + padZero(surah) + "_" + padZero(index + 1) + "_" + padZero(i + 1) + ".mp3",
                 "id": padZero(surah) + "_" + padZero(index + 1) + "_" + padZero(i + 1)
             }
             mainArabic = mainArabic + (i > 0 ? " " : "") + obj.arabic;
@@ -69,7 +69,7 @@ async function featchData() {
         //https://mirrors.quranicaudio.com/everyayah/Muhammad_Ayyoub_128kbps/002076.mp3
         //old: https://everyayah.com/data/Alafasy_128kbps/
         var mainAyat = {
-            "ayat_mp3": "https://mirrors.quranicaudio.com/everyayah/Maher_AlMuaiqly_64kbps/" + padZero(surah) + padZero(index + 1) + ".mp3",
+            "ayat_mp3": "https://everyayah.com/data/Alafasy_128kbps/" + padZero(surah) + padZero(index + 1) + ".mp3",
             "arabic": mainArabic,
             "bengali": ayat.fm,
             "english": ayat.fme.charAt(0).toUpperCase() + ayat.fme.slice(1),
@@ -126,7 +126,32 @@ const example1 = (data, id, type) => new Promise(function (resolve, reject) {
 
     const label1 = document.createElement("label");
     label1.innerHTML = type == 'a' ? data.arabic : type == 'b' ? data.bengali : type == 'e' ? data.english : '';
-    label1.style.fontSize = type == 'a' ? '150px' : type == 'b' ? '100px' : type == 'e' ? '100px' : '';
+    //label1.style.fontSize = type == 'a' ? '150px' : type == 'b' ? '100px' : type == 'e' ? '100px' : '';
+
+    
+    if (type == 'a') {
+        //label1.innerHTML = data.arabic;
+        label1.style.fontSize = data.arabic.length > 250 ? "50px" : data.arabic.length > 150 ? "100px" : data.arabic.length > 70 ? "120px" : "150px";
+        //label1.style.marginBottom = data.arabic.length > 250 ? "50px" : data.arabic.length > 150 ? "70px" : data.arabic.length > 70 ? "80px" : "150px";
+        //para.appendChild(label1);
+    }
+    if (type == 'b') {
+        
+        //label2.innerHTML = data.bengali;
+        label1.style.fontSize = data.bengali.length > 500 ? "25px": data.bengali.length > 250 ? "50px" : data.bengali.length > 150 ? "60px" : data.bengali.length > 70 ? "80px" : "100px";
+        //label2.style.marginBottom = data.bengali.length > 250 ? "15px" : data.bengali.length > 150 ? "50px" : data.bengali.length > 70 ? "70px" : "100px";
+        
+    }
+
+    if (type == 'e') {
+        
+        //label3.innerHTML = data.english;
+        label1.style.fontSize = data.english.length > 500 ? "25px" : data.english.length > 250 ? "50px" : data.english.length > 150 ? "60px" : data.english.length > 70 ? "80px" : "100px";
+        //label3.style.marginBottom = data.english.length > 250 ? "15px" : data.english.length > 150 ? "30px" : data.english.length > 70 ? "50px" : "70px";
+        
+    }
+
+
     para.appendChild(label1);
 
     const element = document.getElementById("maindiv");
@@ -177,11 +202,11 @@ const doStuff = async (newJson) => {
     }
 };
 
-async function delay( ms, state = null ) {
-    
-    return new Promise( ( resolve, reject ) => {
-        window.setTimeout( () => resolve( state ), ms );
-    } );
+async function delay(ms, state = null) {
+
+    return new Promise((resolve, reject) => {
+        window.setTimeout(() => resolve(state), ms);
+    });
 }
 
 function saveData(data, fileName) {
@@ -235,7 +260,7 @@ function getBengaliVoice(mainObj, data, data2, id) {
     });
 }
 
-function getEnglishVoice(mainObj,data2, id) {
+function getEnglishVoice(mainObj, data2, id) {
     var settings = {
         "url": "https://api.narakeet.com/text-to-speech/m4a?voice=Brad",
         "method": "POST",
