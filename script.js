@@ -31,13 +31,17 @@ function myLoop() {         //  create a loop function
     // }, 4000)
 }
 
+var lastEnd = 10;
 
 async function featchData() {
 
 
-    var json = json002;
 
-    for (var i = 0, ln = 10; i < ln; i++) {
+    var json = json002;
+    var start = lastEnd - 1;
+    var end = lastEnd + 9
+
+    for (var i = start, ln = end; i < ln; i++) {
         var index = i;
         var ayat = json[i];
 
@@ -128,7 +132,7 @@ const example1 = (data, id, type) => new Promise(function (resolve, reject) {
     label1.innerHTML = type == 'a' ? data.arabic : type == 'b' ? data.bengali : type == 'e' ? data.english : '';
     //label1.style.fontSize = type == 'a' ? '150px' : type == 'b' ? '100px' : type == 'e' ? '100px' : '';
 
-    
+
     if (type == 'a') {
         //label1.innerHTML = data.arabic;
         label1.style.fontSize = data.arabic.length > 250 ? "50px" : data.arabic.length > 150 ? "100px" : data.arabic.length > 70 ? "120px" : "150px";
@@ -136,19 +140,19 @@ const example1 = (data, id, type) => new Promise(function (resolve, reject) {
         //para.appendChild(label1);
     }
     if (type == 'b') {
-        
+
         //label2.innerHTML = data.bengali;
-        label1.style.fontSize = data.bengali.length > 500 ? "25px": data.bengali.length > 250 ? "50px" : data.bengali.length > 150 ? "60px" : data.bengali.length > 70 ? "80px" : "100px";
+        label1.style.fontSize = data.bengali.length > 500 ? "25px" : data.bengali.length > 250 ? "50px" : data.bengali.length > 150 ? "60px" : data.bengali.length > 70 ? "80px" : "100px";
         //label2.style.marginBottom = data.bengali.length > 250 ? "15px" : data.bengali.length > 150 ? "50px" : data.bengali.length > 70 ? "70px" : "100px";
-        
+
     }
 
     if (type == 'e') {
-        
+
         //label3.innerHTML = data.english;
         label1.style.fontSize = data.english.length > 500 ? "25px" : data.english.length > 250 ? "50px" : data.english.length > 150 ? "60px" : data.english.length > 70 ? "80px" : "100px";
         //label3.style.marginBottom = data.english.length > 250 ? "15px" : data.english.length > 150 ? "30px" : data.english.length > 70 ? "50px" : "70px";
-        
+
     }
 
 
@@ -287,7 +291,7 @@ function getEnglishVoice(mainObj, data2, id) {
                 .then(result => {
                     console.log(result);
                     mainObj.english_mp3 = JSON.parse(result).result;
-                    saveData(mainObj, padZero(surah) + "_" + padZero(id) + ".json")
+                    saveData(mainObj, padZero(surah) + "_" + padZero(id + lastEnd + 1) + ".json")
                 })
                 .catch(error => console.log('error', error));
         }, 5000);
